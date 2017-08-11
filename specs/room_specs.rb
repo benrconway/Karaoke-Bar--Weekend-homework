@@ -8,8 +8,9 @@ require_relative("../guest.rb")
 class RoomTest < Minitest::Test
 
   def setup
-    @guest = Guest.new("Astrid", 100)
-    @guest2 = Guest.new("Donald", 10)
+    @guest = Guest.new("Astrid", 100, "Stairway to Heaven")
+    @guest2 = Guest.new("Donald", 10, "Barbie Girl")
+    @guest2 = Guest.new("Paul", 130, "Voodoo People")
 
     @song = Song.new("Stairway to Heaven", "Led Zepplin")
     @song2 = Song.new("Barbie Girl", "Aqua")
@@ -65,10 +66,21 @@ class RoomTest < Minitest::Test
   end
 
   def test_guest_capacity
+    @room.check_in(@guest)
+    @room.check_in(@guest2)
+    assert_equal("Sorry, the room is full now", @room.check_in(@guest3) )
   end
 
-  def test_deny_guest_without_enough_money
-
+  def test_guest_cheers_for_song
+    @room.add_song(@song)
+    assert_equal("Whoo!", @room.check_in(@guest))
   end
+
+  def test_getting_paid_for_room_use
+    @room.check_in(@guest)
+    @room.check_in(@guest2)
+    assert_equal(30, @room.nightly_take)
+  end
+
 
 end
