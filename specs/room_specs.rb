@@ -1,5 +1,6 @@
 require("minitest/autorun")
 require("minitest/rg")
+require("pry")
 require_relative("../room.rb")
 require_relative("../song.rb")
 require_relative("../guest.rb")
@@ -7,8 +8,8 @@ require_relative("../guest.rb")
 class RoomTest < Minitest::Test
 
   def setup
-    @guest = Guest.new("Astrid")
-    @guest2 = Guest.new("Donald")
+    @guest = Guest.new("Astrid", 100)
+    @guest2 = Guest.new("Donald", 10)
 
     @song = Song.new("Stairway to Heaven", "Led Zepplin")
     @song2 = Song.new("Barbie Girl", "Aqua")
@@ -53,4 +54,21 @@ class RoomTest < Minitest::Test
     @room.check_out(@guest)
     assert_equal(1, @room.guests_present.count)
   end
+
+  def test_room_has_entry_fee
+    assert_equal(15, @room.entry_fee)
+  end
+
+  def test_room_charges_for_entry
+    @room.check_in(@guest)
+    assert_equal(85, @guest.money)
+  end
+
+  def test_guest_capacity
+  end
+
+  def test_deny_guest_without_enough_money
+
+  end
+
 end
