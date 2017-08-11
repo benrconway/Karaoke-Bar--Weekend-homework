@@ -6,12 +6,10 @@ class SongTest < Minitest::Test
 
   def setup
     @song = Song.new("Stairway to Heaven", "Led Zepplin")
-  
   end
 
   def test_song_title
     assert_equal("Stairway to Heaven", @song.title)
-
   end
 
   def test_song_artist
